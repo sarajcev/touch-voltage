@@ -330,6 +330,8 @@ sigma_Va = 24.
 ti = [0.1, 0.2, 0.3, 0.5, 0.7, 1.0]  # seconds
 Pi = [0.2, 0.4, 0.18, 0.1, 0.07, 0.05]  # sum(Pi) = 1
 
+# Compute exposure probability?
+exposure = False
 # Exposure to dangerous voltages data:
 Tf = 1.  # fault duration (seconds)
 Te = 1.  # exposure duration (hours)
@@ -357,12 +359,13 @@ print('Risk of touch voltage:')
 for rho, r in zip(mu_rho, risk_touch_voltage):
     print(f'{rho:.1f} Ohm*m => {r*100:.3f} %')
 
-# Exposure probability.
-Pe = exposure_probability(Tf, Te, ff, fe, T)
-print(f'Exposure probability: {Pe*100:.3f} %')
+if exposure:
+    # Exposure probability.
+    Pe = exposure_probability(Tf, Te, ff, fe, T)
+    print(f'Exposure probability: {Pe*100:.3f} %')
 
-# Total risk of touch voltage exposure.
-risk_total = Pe * np.array(risk_touch_voltage)
-print('Total risk of touch voltage exposure:')
-for rho, r in zip(mu_rho, risk_total):
-    print(f'{rho:.1f} Ohm*m => {r:.4e}')
+    # Total risk of touch voltage exposure.
+    risk_total = Pe * np.array(risk_touch_voltage)
+    print('Total risk of touch voltage exposure:')
+    for rho, r in zip(mu_rho, risk_total):
+        print(f'{rho:.1f} Ohm*m => {r:.4e}')
