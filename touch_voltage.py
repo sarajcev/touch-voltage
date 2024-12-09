@@ -357,12 +357,14 @@ print('Risk of touch voltage:')
 for rho, r in zip(mu_rho, risk_touch_voltage):
     print(f'{rho:.1f} Ohm*m => {r*100:.3f} %')
 
-# Exposure probability.
-Pe = exposure_probability(Tf, Te, ff, fe, T)
-print(f'Exposure probability: {Pe*100:.3f} %')
+exposure = False
+if exposure:
+    # Exposure probability.
+    Pe = exposure_probability(Tf, Te, ff, fe, T)
+    print(f'Exposure probability: {Pe*100:.3f} %')
 
-# Total risk of touch voltage exposure.
-risk_total = Pe * np.array(risk_touch_voltage)
-print('Total risk of touch voltage exposure:')
-for rho, r in zip(mu_rho, risk_total):
-    print(f'{rho:.1f} Ohm*m => {r:.4e}')
+    # Total risk of touch voltage exposure.
+    risk_total = Pe * np.array(risk_touch_voltage)
+    print('Total risk of touch voltage exposure:')
+    for rho, r in zip(mu_rho, risk_total):
+        print(f'{rho:.1f} Ohm*m => {r:.4e}')
